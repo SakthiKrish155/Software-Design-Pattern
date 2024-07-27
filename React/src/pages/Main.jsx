@@ -5,31 +5,25 @@ import { FaTasks, FaClock, FaUsers, FaBell, FaChartBar, FaGlobe } from 'react-ic
 const Main = () => {
   return (
     <div>
-      {/* Welcome Section */}
       <div className='text-center my-10'>
-          <h1 className='text-7xl font-bold' style={{ fontFamily: 'initial' }}>Welcome to The Daily Prophet !!!</h1>
+          <h1 className='text-7xl font-bold' style={{ fontFamily: 'initial' }}>Welcome to Time Turner !!!</h1>
           <p className='text-3xl mt-4' style={{ fontFamily: 'IM Fell English, serif' }}>"Revolutionize Your Task and Time Management"</p>
         </div>
-      {/* Image Banner */}
       <div className='flex flex-row w-full justify-center items-center'>
         <div className='w-2/4 flex justify-center items-center bg-background p-5'>
           <img src='https://ik.imagekit.io/s06oi31ye/Images/Organizing%20projects-pana.svg?updatedAt=1721923592378' alt='Banner' className='h-auto w-full object-cover' />
         </div>
 
-        {/* Description Section */}
         <div className='mx-auto w-2/4 max-w-4xl text-center p-4' style={{ fontFamily: 'IM Fell English, serif' }}>
           <p className='text-2xl text-center gap-6 leading-loose'>
             In the fast-paced, demanding environment of today’s world, effective time management and seamless task organization
-            are pivotal for achieving success. <strong>The Daily Prophet</strong> is your ultimate solution to mastering these challenges.
+            are pivotal for achieving success. <strong>TIME TURNER </strong> is your ultimate solution to mastering these challenges.
             Designed for students, professionals, and entrepreneurs, our application empowers you to manage your tasks, projects,
             and schedules with unparalleled ease and efficiency.
           </p>
         </div>
       </div>
 
-
-
-      {/* Key Features Section */}
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-10'>
         <div className='text-center'>
           <FaTasks size={50} className='mx-auto text-blue-500' />
@@ -63,21 +57,19 @@ const Main = () => {
         </div>
       </div>
 
-      {/* Motivational Quote */}
-      <div className='text-center my-10 p-6 bg-primary/10' style={{ fontFamily: 'IM Fell English, serif' }}>
+      <div className='text-center my-10 p-6 bg-primary/10' style={{ fontFamily: 'monospace, serif' }}>
         <blockquote className='text-2xl text-foreground italic'>
-          "The key is in not spending time, but in investing it." - Stephen R. Covey
+        “The key is not to prioritize what's on your schedule, but to schedule your priorities.” <br/>
+        – Stephen Covey, The 7 Habits of Highly Effective People (1989)
         </blockquote>
       </div>
 
-      {/* Call to Action */}
       <div className='text-center my-10'>
         <button className='bg-blue-500 text-background px-6 py-3 rounded-full text-xl' style={{ fontFamily: 'IM Fell English, serif' }}>
           Start Your Journey Towards Better Productivity Today!
         </button>
       </div>
 
-      {/* Footer Section */}
       <div>
         <Footer />
       </div>

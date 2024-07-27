@@ -10,6 +10,14 @@ import UserLayout from './layout/UserLayout'
 import UserDashboard from './public/User/UserDashboard'
 import AdminUsers from './public/Admin/AdminUsers'
 import AdminProjects from './public/Admin/AdminProjects'
+import AdminTasks from './public/Admin/AdminTasks'
+import Admin from './pages/Admin'
+import User from './pages/User'
+import UserInProgress from './public/User/UserInProgress'
+import UserImportant from './public/User/UserImportant'
+import UserNotStarted from './public/User/UserNotStarted'
+import UserTasks from './public/User/UserTasks'
+import UserCompleted from './public/User/UserCompleted'
 
 
 const App = () => {
@@ -22,13 +30,18 @@ const App = () => {
         <Route path = "/signUp" element = {<SignUp/>}/>
       </Route>
       <Route element = {<AdminLayout/>}>
-        <Route path = "/admin/dashboard" element = {<AdminDashboard/>}/>
-        <Route path = "/admin/users" element={<AdminUsers/>}/>
-        <Route path = "/admin/projects" element={<AdminProjects/>}/>
-        <Route path = "/admin/tasks" element={<AdminUsers/>}/>
+        <Route path = "/admin/content" element = {<Admin/>}/>
+        <Route path = "/admin/projects" element = {<AdminProjects/>}/>
+        <Route path = "/admin/tasks" element = {<AdminTasks/>}/>
+        <Route path = "/admin/users" element = {<AdminUsers/>}/>
       </Route>
       <Route element = {<UserLayout/>}>
-        <Route path = "/userDashboard" element = {<UserDashboard/>}/>
+        <Route path = "/user/content" element = {<User/>}/>
+        <Route path = "/user/allTasks" element = {<UserTasks/>}/>
+        <Route path = "/user/completed" element = {<UserCompleted/>}/>
+        <Route path = "/user/inProgress" element = {<UserInProgress/>}/>
+        <Route path = "/user/important" element = {<UserImportant/>}/>
+        <Route path = "/user/yetToStart" element = {<UserNotStarted/>}/>
       </Route>
     </Routes>
     </div>

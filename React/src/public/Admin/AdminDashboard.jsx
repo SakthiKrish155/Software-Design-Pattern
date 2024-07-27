@@ -1,57 +1,68 @@
 import { Button } from '@/components/ui/button'
-import { faDashboard, faProjectDiagram, faTasks, faUser } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Power } from 'lucide-react'
+import { CircleHelp, Home, Layers, Power, Settings, StickyNote, UserCircleIcon } from 'lucide-react'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const AdminDashboard = () => {
   const AdminLinks = [
     {
       title: 'Dashboard',
-      link: '/admin/dashboard',
-      icon: faDashboard
+      link: '/admin/content',
+      icon: Home
     },
     {
       title: 'Projects',
       link: '/admin/projects',
-      icon: faProjectDiagram
+      icon: StickyNote
     },
     {
       title: 'Tasks',
       link: '/admin/tasks',
-      icon: faTasks
+      icon: Layers
     },
     {
       title: 'Users',
       link: '/admin/users',
-      icon: faUser
+      icon: UserCircleIcon
     }
   ]
 
   return (
-    <div className='h-screen w-1/6 flex flex-col justify-center items-center border-solid border-r-2'>
-      <div className='h-[5%] text-primary font-bold text-l flex flex-row justify-between items-center'>
-        <img src='https://ik.imagekit.io/s06oi31ye/Images/logo-transparent-svg.svg?updatedAt=1722052288163' className='h-64 w-64' />
+    <div className='h-screen w-1/6 flex flex-col justify-center items-center'>
+      <div className='h-[5%] text-primary font-bold text-l flex flex-col justify-between items-center'>
+        <img src='https://ik.imagekit.io/s06oi31ye/Images/logo-svg.svg?updatedAt=1722105104552' className='h-60 w-60' />
       </div>
-      <div className='h-[85%] w-full flex flex-col justify-start items center gap-3'>
+      <div className='h-[90%] w-full flex flex-col justify-center items center gap-2'>
         {
-          AdminLinks.map((data, index) => {
-            <Link key={index} to={data.link}>
-              <span className='flex flex-row justify-start items-center gap-2'>
-                {React.createElement(data.icon, { size: 20 })}
+          AdminLinks.map((data, index) => (
+            <NavLink key={index} to={data.link} className='hover:bg-primary/10 font-bold mt-2 w-full'>
+              <span className='flex justify-start items-center py-2 my-1 font-medium rounded-md cursor-pointer'>
+                {React.createElement(data.icon, { size: 20, className: "flex gap-3 mr-5 ml-5" })}
                 {data.title}
               </span>
-            </Link>
-          })
+            </NavLink>
+          ))
         }
+        <hr className="my-3" />
       </div>
       <div className='h-[5%] w-full flex flex-col justify-center items-center'>
-        <Button className='p-5  bg-red-500/5 hover:bg-red-500/10 font-bold  w-full'>
-          <span className='flex flex-row items-center justify-start h-full w-full gap-2 text-red-500'>
-            <Power size={20} /> Logout
-          </span>
-        </Button>
+        <div className='p-0 m-0 w-full flex flex-row justify-between items-center gap-3'>
+          <div className='w-1/3 flex justify-center items-center'>
+            <Settings />
+          </div>
+          <div className='w-2/3 flex justify-center items-center'>
+            <CircleHelp />
+          </div>
+          <div>
+            <Link to="/" className="w-1/3">
+              <Button className="bg-background hover:bg-transparent font-bold flex items-center justify-center">
+                <span className="text-red-500 flex items-center justify-center">
+                  <Power size={20} />
+                </span>
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   )

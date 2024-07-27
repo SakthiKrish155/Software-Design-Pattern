@@ -9,7 +9,7 @@ const Footer = () => {
     return (
         <div className='w-full h-[12vh] flex flex-row justify-center items-center border-t-2 border-primary shadow-sm'>
             <div className='h-full w-1/4 flex justify-center items-center text-xl font-bold text-foreground'>
-                ©️ thedailyprophet.com
+                ©️ timeturner.com
             </div>
             <div className='h-full w-1/4 flex flex-row justify-between items-center text-l font-semibold text-foreground'>
                 <a href='aboutus'>About Us</a>

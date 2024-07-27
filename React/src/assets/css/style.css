@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -30,6 +31,16 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --blue-100: 200 100% 90%;
+    --blue-200: 200 90% 80%;
+    --blue-300: 200 80% 70%;
+    --blue-400: 200 70% 60%;
+    --blue-500: 200 60% 50%;
+    --color-project1: var(--blue-500);
+    --color-project2: var(--blue-400);
+    --color-project3: var(--blue-300);
+    --color-project4: var(--blue-200);
+    --color-project5: var(--blue-100);
   }
 
   .dark {
@@ -57,6 +68,11 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --blue-100: 190 60% 20%;
+    --blue-200: 190 70% 30%;
+    --blue-300: 190 80% 40%;
+    --blue-400: 190 90% 50%;
+    --blue-500: 190 100% 60%;
   }
 }
 

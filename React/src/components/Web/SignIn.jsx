@@ -20,10 +20,10 @@ const SignIn = () => {
         // Implement your login logic here
         if (email === 'admin@gmail.com' && password === 'admin') {
             toast.success('Login successful');
-            navigate('/adminDashboard');
+            navigate('/admin/content');
         } else if (email === 'test@gmail.com' && password === 'password') {
             toast.success('Login successful');
-            navigate('/userDashboard');
+            navigate('/user/content');
         } else {
             toast.error('Invalid email or password');
         }
