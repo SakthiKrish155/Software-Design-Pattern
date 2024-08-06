@@ -32,7 +32,7 @@ public class TasksController {
     }
 
     @PostMapping("/add")
-    public Tasks add(@RequestBody Tasks task) {
+    public String add(@RequestBody Tasks task) {
         return service.addTask(task);
     }
 

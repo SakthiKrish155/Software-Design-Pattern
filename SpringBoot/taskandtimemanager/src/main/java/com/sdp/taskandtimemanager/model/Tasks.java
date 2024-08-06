@@ -2,6 +2,7 @@ package com.sdp.taskandtimemanager.model;
 
 import java.time.LocalDate;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,6 +31,7 @@ public class Tasks {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "assignedto")
+    // @JsonIgnore
     private Users member;
 
     public Tasks() {

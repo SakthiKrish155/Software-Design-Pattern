@@ -31,9 +31,13 @@ public class ProjectsController {
         return service.findProjectById(projectId);
     }
     @PostMapping("/add")
-    public Projects add(@RequestBody Projects project) {
+    public String add(@RequestBody Projects project) {
         return service.addProject(project);
     }
+    // @PostMapping("/add/{managerId}")
+    // public Projects add(@RequestBody Projects project , @PathVariable Long managerId) {
+    //     return service.addProject(project,managerId);
+    // }
     @PutMapping("/update/{projectId}")
     public Projects update(@PathVariable Long projectId, @RequestBody Projects project) {
         return service.updateProject(projectId,project);

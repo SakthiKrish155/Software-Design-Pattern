@@ -6,14 +6,22 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sdp.taskandtimemanager.model.Projects;
 import com.sdp.taskandtimemanager.model.Tasks;
+import com.sdp.taskandtimemanager.model.Users;
+import com.sdp.taskandtimemanager.repo.ProjectsRepo;
 import com.sdp.taskandtimemanager.repo.TasksRepo;
+import com.sdp.taskandtimemanager.repo.UsersRepo;
 
 @Service
 public class TasksService {
 
     @Autowired
     private TasksRepo repo;
+    @Autowired
+    private ProjectsRepo prepo;
+    @Autowired
+    private UsersRepo urepo;
 
     public List<Tasks> findAllTasks() {
         return repo.findAll();
@@ -23,8 +31,19 @@ public class TasksService {
         return repo.findById(taskId).orElse(null);
     }
 
-    public Tasks addTask(Tasks task) {
-        return repo.save(task);
+    public String addTask(Tasks task) {
+        Projects project = prepo.findById(task.getProject().getProjectid()).orElse(null);
+        Users user = urepo.findById(task.getMember().getUserid()).orElse(null);
+        if (project == null) {
+            return "Project error";
+        }
+        if (user == null) {
+            return "User error";
+        }
+        task.setProject(project);
+        task.setMember(user);
+        repo.save(task);
+        return "Task added ";
     }
 
     public Tasks updateTask(Long taskId, Tasks task) {
@@ -48,7 +67,7 @@ public class TasksService {
         Optional<Tasks> optionalTask = repo.findById(taskId);
         if (optionalTask.isPresent()) {
             Tasks existingTask = optionalTask.get();
-            
+
             if (task.getTaskname() != null) {
                 existingTask.setTaskname(task.getTaskname());
             }

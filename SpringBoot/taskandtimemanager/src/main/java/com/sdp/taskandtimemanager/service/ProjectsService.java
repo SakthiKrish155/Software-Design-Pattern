@@ -7,13 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sdp.taskandtimemanager.model.Projects;
+// import com.sdp.taskandtimemanager.model.Tasks;
+import com.sdp.taskandtimemanager.model.Users;
 import com.sdp.taskandtimemanager.repo.ProjectsRepo;
+import com.sdp.taskandtimemanager.repo.UsersRepo;
 
 @Service
 public class ProjectsService {
 
     @Autowired
     private ProjectsRepo repo;
+
+    @Autowired
+    private UsersRepo urepo;
 
     public List<Projects> findAllProjects() {
         return repo.findAll();
@@ -23,9 +29,34 @@ public class ProjectsService {
         return repo.findById(projectId).orElse(null);
     }
 
-    public Projects addProject(Projects project) {
-        return repo.save(project);
+    public String addProject(Projects project) {
+        Users user = urepo.findById(project.getManager().getUserid()).orElse(null);
+        if(user == null){
+            return "User not found";
+        }
+        project.setManager(user);
+        repo.save(project);
+        return "Project Added successfully";
     }
+
+    // public String addTask(Tasks task) {
+    //     Projects project = prepo.findById(task.getProject().getProjectid()).orElse(null);
+    //     Users user = urepo.findById(task.getMember().getUserid()).orElse(null);
+    //     if (project == null) {
+    //         return "Project error";
+    //     }
+    //     if (user == null) {
+    //         return "User error";
+    //     }
+    //     task.setProject(project);
+    //     task.setMember(user);
+    //     repo.save(task);
+    //     return "Task added ";
+    // }
+
+    // public Projects addProject(Projects project) {
+    //     return repo.save(project);
+    // }
 
     public Projects updateProject(Long projectId, Projects project) {
 
