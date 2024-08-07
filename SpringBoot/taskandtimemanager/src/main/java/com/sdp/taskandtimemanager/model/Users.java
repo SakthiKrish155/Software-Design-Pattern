@@ -171,32 +171,38 @@ public class Users implements UserDetails {
     private List<Token> tokens;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
-
+    
     @Override
+    @JsonIgnore
     public String getUsername() {
         // NOTE : return username, if you are using username for login instead of email
         return email;
     }
-
+    
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
-
+    
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
-
+    
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
+    
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }

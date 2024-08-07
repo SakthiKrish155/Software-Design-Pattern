@@ -2,7 +2,6 @@ package com.sdp.taskandtimemanager.model;
 
 import java.time.LocalDate;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+// property = "taskid")
 public class Tasks {
 
     @Id
@@ -23,13 +24,13 @@ public class Tasks {
     private String taskstatus;
     private String taskpriority;
     private LocalDate duedate;
-    private Boolean assignedstatus;
+    private Boolean assignedstatus = false;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "projectid")
     private Projects project;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "assignedto")
     // @JsonIgnore
     private Users member;
