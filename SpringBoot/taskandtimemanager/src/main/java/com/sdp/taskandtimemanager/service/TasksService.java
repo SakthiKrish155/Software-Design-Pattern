@@ -31,39 +31,50 @@ public class TasksService {
         return repo.findById(taskId).orElse(null);
     }
 
-    public String addTask(Tasks task) {
-        Projects project = prepo.findById(task.getProject().getProjectid()).orElse(null);
-        Users user = urepo.findById(task.getMember().getUserid()).orElse(null);
+    public String addTask(Tasks task, Long projectId, Long userId) {
+        Projects project = prepo.findById(projectId).orElse(null);
+        Users user = urepo.findById(userId).orElse(null);
+
         if (project == null) {
-            return "Project error";
+            return "Project not found";
         }
         if (user == null) {
-            return "User error";
+            return "User not found";
         }
+
         task.setProject(project);
         task.setMember(user);
+
         repo.save(task);
-        return "Task added ";
+        return "Task added";
     }
 
-    public Tasks updateTask(Long taskId, Tasks task) {
+    public Tasks updateTask(Long taskId, Tasks task, Long projectId, Long userId) {
         Optional<Tasks> optionalTasks = repo.findById(taskId);
         if (optionalTasks.isPresent()) {
             Tasks existingTask = optionalTasks.get();
+
             existingTask.setTaskname(task.getTaskname());
             existingTask.setTaskdescription(task.getTaskdescription());
             existingTask.setTaskstatus(task.getTaskstatus());
-            existingTask.setDuedate(task.getDuedate());
-            existingTask.setProject(task.getProject());
             existingTask.setTaskpriority(task.getTaskpriority());
-            existingTask.setMember(task.getMember());
-            existingTask.setAssignedstatus(task.getAssignedstatus());
+
+            Projects project = prepo.findById(projectId).orElse(null);
+            Users user = urepo.findById(userId).orElse(null);
+
+            if (project != null) {
+                existingTask.setProject(project);
+            }
+            if (user != null) {
+                existingTask.setMember(user);
+            }
+
             return repo.save(existingTask);
         }
-        return task;
+        return null;
     }
 
-    public Tasks patchTask(Long taskId, Tasks task) {
+    public Tasks patchTask(Long taskId, Tasks task, Long projectId, Long userId) {
         Optional<Tasks> optionalTask = repo.findById(taskId);
         if (optionalTask.isPresent()) {
             Tasks existingTask = optionalTask.get();
@@ -76,10 +87,6 @@ public class TasksService {
                 existingTask.setTaskdescription(task.getTaskdescription());
             }
 
-            if (task.getDuedate() != null) {
-                existingTask.setDuedate(task.getDuedate());
-            }
-
             if (task.getTaskstatus() != null) {
                 existingTask.setTaskstatus(task.getTaskstatus());
             }
@@ -88,17 +95,16 @@ public class TasksService {
                 existingTask.setTaskpriority(task.getTaskpriority());
             }
 
-            if (task.getMember() != null) {
-                existingTask.setMember(task.getMember());
+            Projects project = prepo.findById(projectId).orElse(null);
+            Users user = urepo.findById(userId).orElse(null);
+
+            if (project != null) {
+                existingTask.setProject(project);
+            }
+            if (user != null) {
+                existingTask.setMember(user);
             }
 
-            if (task.getProject() != null) {
-                existingTask.setProject(task.getProject());
-            }
-
-            if (task.getAssignedstatus() != null) {
-                existingTask.setAssignedstatus(task.getAssignedstatus());
-            }
             return repo.save(existingTask);
         }
         return task;

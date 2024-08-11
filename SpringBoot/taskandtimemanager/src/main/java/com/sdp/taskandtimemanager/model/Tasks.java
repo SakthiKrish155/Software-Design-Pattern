@@ -1,6 +1,6 @@
 package com.sdp.taskandtimemanager.model;
 
-import java.time.LocalDate;
+// import java.time.LocalDate;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -23,8 +23,8 @@ public class Tasks {
     private String taskdescription;
     private String taskstatus;
     private String taskpriority;
-    private LocalDate duedate;
-    private Boolean assignedstatus = false;
+    // private LocalDate duedate;
+    // private Boolean assignedstatus = false;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "projectid")
@@ -78,13 +78,13 @@ public class Tasks {
         this.taskpriority = taskpriority;
     }
 
-    public LocalDate getDuedate() {
-        return duedate;
-    }
+    // public LocalDate getDuedate() {
+    //     return duedate;
+    // }
 
-    public void setDuedate(LocalDate duedate) {
-        this.duedate = duedate;
-    }
+    // public void setDuedate(LocalDate duedate) {
+    //     this.duedate = duedate;
+    // }
 
     public Projects getProject() {
         return project;
@@ -94,13 +94,13 @@ public class Tasks {
         this.project = project;
     }
 
-    public Boolean getAssignedstatus() {
-        return assignedstatus;
-    }
+    // public Boolean getAssignedstatus() {
+    //     return assignedstatus;
+    // }
 
-    public void setAssignedstatus(Boolean assignedstatus) {
-        this.assignedstatus = assignedstatus;
-    }
+    // public void setAssignedstatus(Boolean assignedstatus) {
+    //     this.assignedstatus = assignedstatus;
+    // }
 
     public Users getMember() {
         return member;
