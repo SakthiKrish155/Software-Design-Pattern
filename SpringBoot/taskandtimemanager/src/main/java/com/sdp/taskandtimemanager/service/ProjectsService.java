@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.sdp.taskandtimemanager.model.Projects;
@@ -21,6 +24,16 @@ public class ProjectsService {
     @Autowired
     private UsersRepo urepo;
 
+    private String getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return userDetails.getUsername(); // Return email or username
+        }
+        throw new IllegalStateException("No authenticated user found");
+    }
+    
+
     public List<Projects> findAllProjects() {
         return repo.findAll();
     }
@@ -29,33 +42,55 @@ public class ProjectsService {
         return repo.findById(projectId).orElse(null);
     }
 
+    // public String addProject(Projects project) {
+    // Users user = urepo.findById(project.getManager().getUserid()).orElse(null);
+    // if(user == null){
+    // return "User not found";
+    // }
+    // project.setManager(user);
+    // repo.save(project);
+    // return "Project Added successfully";
+    // }
     public String addProject(Projects project) {
-        Users user = urepo.findById(project.getManager().getUserid()).orElse(null);
-        if(user == null){
+        // Get the currently logged-in user's email
+        String currentUsername = getCurrentUsername();
+    
+        // Retrieve the user from the repository using email
+        Users user = urepo.findManagerByEmail(currentUsername); // Assuming you have a method to find user by email
+        if (user == null) {
             return "User not found";
         }
+    
+        // Set the logged-in user as the manager of the new project
         project.setManager(user);
         repo.save(project);
         return "Project Added successfully";
     }
+    
+
+    // public String addProject(Projects project) {
+    // repo.save(project);
+    // return "Project Added successfully";
+    // }
 
     // public String addTask(Tasks task) {
-    //     Projects project = prepo.findById(task.getProject().getProjectid()).orElse(null);
-    //     Users user = urepo.findById(task.getMember().getUserid()).orElse(null);
-    //     if (project == null) {
-    //         return "Project error";
-    //     }
-    //     if (user == null) {
-    //         return "User error";
-    //     }
-    //     task.setProject(project);
-    //     task.setMember(user);
-    //     repo.save(task);
-    //     return "Task added ";
+    // Projects project =
+    // prepo.findById(task.getProject().getProjectid()).orElse(null);
+    // Users user = urepo.findById(task.getMember().getUserid()).orElse(null);
+    // if (project == null) {
+    // return "Project error";
+    // }
+    // if (user == null) {
+    // return "User error";
+    // }
+    // task.setProject(project);
+    // task.setMember(user);
+    // repo.save(task);
+    // return "Task added ";
     // }
 
     // public Projects addProject(Projects project) {
-    //     return repo.save(project);
+    // return repo.save(project);
     // }
 
     public Projects updateProject(Long projectId, Projects project) {

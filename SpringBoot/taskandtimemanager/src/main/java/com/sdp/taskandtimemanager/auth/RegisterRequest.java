@@ -1,6 +1,6 @@
 package com.sdp.taskandtimemanager.auth;
 
-import java.time.LocalDate;
+// import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +17,5 @@ public class RegisterRequest {
     private String password;
     private String email;
     private String role;
-    private LocalDate dob;
     private String contact;
 }

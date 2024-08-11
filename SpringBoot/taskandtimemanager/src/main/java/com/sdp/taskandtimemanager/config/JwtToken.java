@@ -17,7 +17,7 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtToken {
     private String EKey = "EbeEsh7VhXpHMAkLz7Xb3TYm7a4KLMlYn0Kr1NJEhTIOeU9HJsv3t2bMa5OjoiaD";
-    private int Duration = 60 * 60 * 24 * 7; // 7 days
+    private int Duration = 60 * 60 * 24 * 7 * 1000; // 7 days
 
     public String extractUsername(String token) {
         return extraClaim(token, Claims::getSubject); //to get the username form the body of the token

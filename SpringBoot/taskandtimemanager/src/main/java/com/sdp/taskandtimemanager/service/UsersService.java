@@ -52,11 +52,11 @@ public class UsersService{
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .contact(registerRequest.getContact())
-                .dob(registerRequest.getDob())
-                .role(Users.Role.USER)
+                // .dob(registerRequest.getDob())
+                .role(Users.Role.TEAMMEMBER)
                 .build();
         repo.save(user);
-        return "User registered successfully.";
+        return "Team Member registered successfully";
     }
 
     public String registerManager(RegisterRequest registerRequest) {
@@ -69,11 +69,11 @@ public class UsersService{
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .contact(registerRequest.getContact())
-                .dob(registerRequest.getDob())
+                // .dob(registerRequest.getDob())
                 .role(Users.Role.PROJECTMANAGER)
                 .build();
         repo.save(user);
-        return "Project Manager registered successfully.";
+        return "Project Manager registered successfully";
     }
 
     public String login(LoginRequest loginRequest) {
@@ -96,7 +96,7 @@ public class UsersService{
             existingUser.setEmail(user.getEmail());
             existingUser.setPassword(user.getPassword());
             existingUser.setContact(user.getContact());
-            existingUser.setDob(user.getDob());
+            // existingUser.setDob(user.getDob());
             return repo.save(existingUser);
         }
         return user;
@@ -115,9 +115,9 @@ public class UsersService{
             if (user.getPassword() != null) {
                 existingUsers.setPassword(user.getPassword());
             }
-            if (user.getDob() != null) {
-                existingUsers.setDob(user.getDob());
-            }
+            // if (user.getDob() != null) {
+                // existingUsers.setDob(user.getDob());
+            // }
             if (user.getRole() != null) {
                 existingUsers.setRole(user.getRole());
             }

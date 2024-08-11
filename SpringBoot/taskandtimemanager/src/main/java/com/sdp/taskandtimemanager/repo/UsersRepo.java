@@ -6,5 +6,6 @@ import com.sdp.taskandtimemanager.model.Users;
 
 public interface UsersRepo extends JpaRepository<Users,Long> {
     Optional<Users> findByEmail(String email);
+    Users findManagerByEmail(String email);
     
 }
