@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -76,17 +77,42 @@ public class UsersService{
         return "Project Manager registered successfully";
     }
 
+    // public String login(LoginRequest loginRequest) {
+    //     authenticationManager.authenticate(
+    //             new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+    //     var user = repo.findByEmail(loginRequest.getEmail()).orElseThrow();
+    //     Map<String, Object> extraClaims = new HashMap<>();
+    //     extraClaims.put("role", user.getRole().toString());
+    //     var accessToken = jwtUtil.generateToken(extraClaims, user);
+    //     revokeAllUserTokens(user);
+    //     saveUserToken(user, accessToken);
+    //     return accessToken;
+    // }
+
     public String login(LoginRequest loginRequest) {
+    try {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-        var user = repo.findByEmail(loginRequest.getEmail()).orElseThrow();
-        Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("role", user.getRole().toString());
-        var accessToken = jwtUtil.generateToken(extraClaims, user);
-        revokeAllUserTokens(user);
-        saveUserToken(user, accessToken);
-        return accessToken;
+            new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+    } catch (BadCredentialsException e) {
+        throw new RuntimeException("Invalid email or password");
     }
+
+    var user = repo.findByEmail(loginRequest.getEmail())
+                   .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Map<String, Object> extraClaims = new HashMap<>();
+    extraClaims.put("role", user.getRole().toString());
+
+    String accessToken = jwtUtil.generateToken(extraClaims, user);
+
+    revokeAllUserTokens(user);
+    saveUserToken(user, accessToken);
+
+    return accessToken;
+}
+
+
+
 
     public Users updateUser(Long userId, Users user) {
         Optional<Users> optionalUser = repo.findById(userId);

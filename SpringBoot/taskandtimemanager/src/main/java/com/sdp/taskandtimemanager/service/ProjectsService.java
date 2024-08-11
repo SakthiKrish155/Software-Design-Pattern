@@ -26,7 +26,7 @@ public class ProjectsService {
 
     private String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             return userDetails.getUsername(); // Return email or username
         }
@@ -42,59 +42,18 @@ public class ProjectsService {
         return repo.findById(projectId).orElse(null);
     }
 
-    // public String addProject(Projects project) {
-    // Users user = urepo.findById(project.getManager().getUserid()).orElse(null);
-    // if(user == null){
-    // return "User not found";
-    // }
-    // project.setManager(user);
-    // repo.save(project);
-    // return "Project Added successfully";
-    // }
     public String addProject(Projects project) {
-        // Get the currently logged-in user's email
         String currentUsername = getCurrentUsername();
-    
-        // Retrieve the user from the repository using email
         Users user = urepo.findManagerByEmail(currentUsername); // Assuming you have a method to find user by email
         if (user == null) {
             return "User not found";
         }
-    
-        // Set the logged-in user as the manager of the new project
         project.setManager(user);
         repo.save(project);
         return "Project Added successfully";
     }
-    
-
-    // public String addProject(Projects project) {
-    // repo.save(project);
-    // return "Project Added successfully";
-    // }
-
-    // public String addTask(Tasks task) {
-    // Projects project =
-    // prepo.findById(task.getProject().getProjectid()).orElse(null);
-    // Users user = urepo.findById(task.getMember().getUserid()).orElse(null);
-    // if (project == null) {
-    // return "Project error";
-    // }
-    // if (user == null) {
-    // return "User error";
-    // }
-    // task.setProject(project);
-    // task.setMember(user);
-    // repo.save(task);
-    // return "Task added ";
-    // }
-
-    // public Projects addProject(Projects project) {
-    // return repo.save(project);
-    // }
 
     public Projects updateProject(Long projectId, Projects project) {
-
         Optional<Projects> optionalProjects = repo.findById(projectId);
         if (optionalProjects.isPresent()) {
             Projects existingProjects = optionalProjects.get();
@@ -135,6 +94,5 @@ public class ProjectsService {
             return repo.save(existingProject);
         }
         return project;
-
     }
 }

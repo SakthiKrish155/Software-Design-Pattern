@@ -43,8 +43,8 @@ public class SecurityConfig {
         //allows these endpoints without authentication i.e it pre-authenticates
         private static final String[] PublicEndPoints = {
                         "/users/auth/**",
-                        "/projects/**",
-                        "/tasks/**",
+                        // "/projects/**",
+                        // "/tasks/**",
                         "/api/web/sites",
                         "/swagger-ui/**",
                         "/swagger-ui.html/**",
@@ -63,7 +63,7 @@ public class SecurityConfig {
                                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                                 .userDetailsService(userDetailsService)
                                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                                .logout(logout -> logout.logoutUrl("/api/auth/logout")
+                                .logout(logout -> logout.logoutUrl("/users/auth/logout")
                                                 .addLogoutHandler(logoutHandler)
                                                 .logoutSuccessHandler((request, response,
                                                                 authentication) -> SecurityContextHolder

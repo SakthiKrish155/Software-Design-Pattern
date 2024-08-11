@@ -2,6 +2,7 @@ package com.sdp.taskandtimemanager.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,6 +19,7 @@ import com.sdp.taskandtimemanager.service.ProjectsService;
 
 @RestController
 @RequestMapping("/projects")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ProjectsController {
     @Autowired
     private ProjectsService service;
@@ -38,6 +40,7 @@ public class ProjectsController {
     // public Projects add(@RequestBody Projects project , @PathVariable Long managerId) {
     //     return service.addProject(project,managerId);
     // }
+
     @PutMapping("/update/{projectId}")
     public Projects update(@PathVariable Long projectId, @RequestBody Projects project) {
         return service.updateProject(projectId,project);

@@ -1,10 +1,9 @@
 package com.sdp.taskandtimemanager.model;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+// import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -25,10 +24,7 @@ public class Projects {
     private Long projectid;
     private String projectname;
     private String projectdescription;
-
-    // For JSON serialization/deserialization
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private String duedate;
+    private LocalDate duedate;
 
     @ManyToOne
     @JoinColumn(name = "managerid")
@@ -39,7 +35,7 @@ public class Projects {
     @JsonIgnore
     private List<Tasks> tasks;
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    // private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public Long getProjectid() {
         return projectid;
@@ -66,14 +62,11 @@ public class Projects {
     }
 
     public LocalDate getDuedate() {
-        if (duedate != null && !duedate.isEmpty()) {
-            return LocalDate.parse(duedate, DATE_FORMATTER);
-        }
-        return null;
+        return duedate;
     }
 
     public void setDuedate(LocalDate duedate) {
-        this.duedate = duedate != null ? duedate.format(DATE_FORMATTER) : null;
+        this.duedate = duedate;
     }
 
     public Users getManager() {
