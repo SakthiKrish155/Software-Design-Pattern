@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sdp.taskandtimemanager.dto.TaskFormDto;
 import com.sdp.taskandtimemanager.model.Tasks;
 import com.sdp.taskandtimemanager.service.TasksService;
 
@@ -35,9 +36,16 @@ public class TasksController {
         return service.findTaskById(taskId);
     }
 
-       @PostMapping("/add")
-    public ResponseEntity<String> add(@RequestBody Tasks task, @RequestParam Long projectId, @RequestParam Long userId) {
+    @PostMapping("/add")
+    public ResponseEntity<String> add(@RequestBody TaskFormDto task) {
+        
+        Long projectId = task.getProjectid();
+        Long userId = task.getAssignedto();
+        // System.out.println("``````````` Project ID: " + task.toString());
+        // System.out.println(projectId + "``````````" + userId);
+        
         String result = service.addTask(task, projectId, userId);
+
         if ("Project not found".equals(result) || "User not found".equals(result)) {
             return ResponseEntity.badRequest().body(result);
         }
@@ -45,17 +53,22 @@ public class TasksController {
     }
 
     @PutMapping("/update/{taskId}")
-    public Tasks update(@PathVariable Long taskId, @RequestBody Tasks task,@RequestParam Long projectId, @RequestParam Long userId) {
-        return service.updateTask(taskId, task,projectId, userId);
+    public String update(@PathVariable Long taskId,@RequestBody TaskFormDto task) {
+        Long projectId = task.getProjectid();
+        Long userId = task.getAssignedto();
+        
+        System.out.println(taskId+" of task Controller");
+        return service.updateTask(taskId, task,projectId,userId);
     }
 
     @PatchMapping("/updateSpecific/{taskId}")
-    public Tasks patch(@PathVariable Long taskId, @RequestBody Tasks task,@RequestParam Long projectId, @RequestParam Long userId) {
-        return service.patchTask(taskId, task,projectId, userId);
+    public Tasks patch(@PathVariable Long taskId, @RequestBody Tasks task) {
+        return service.patchTask(taskId, task);
     }
 
-    @DeleteMapping("delete/{taskId}")
+    @DeleteMapping("/delete/{taskId}")
     public void delete(@PathVariable Long taskId) {
+        
         service.deleteTask(taskId);
     }
 

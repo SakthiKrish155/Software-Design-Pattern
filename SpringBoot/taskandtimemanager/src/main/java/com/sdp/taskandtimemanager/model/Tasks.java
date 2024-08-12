@@ -3,6 +3,7 @@ package com.sdp.taskandtimemanager.model;
 // import java.time.LocalDate;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -10,8 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.ToString;
 
 @Entity
+@ToString
 // @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
 // property = "taskid")
 public class Tasks {
@@ -28,9 +31,11 @@ public class Tasks {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "projectid")
+    // @Column(name = "projectid")
     private Projects project;
-
+    
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+   
     @JoinColumn(name = "assignedto")
     // @JsonIgnore
     private Users member;
@@ -90,8 +95,8 @@ public class Tasks {
         return project;
     }
 
-    public void setProject(Projects project) {
-        this.project = project;
+    public void setProject(Projects project2) {
+        this.project = project2;
     }
 
     // public Boolean getAssignedstatus() {
